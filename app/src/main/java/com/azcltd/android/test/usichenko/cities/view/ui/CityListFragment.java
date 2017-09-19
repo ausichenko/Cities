@@ -49,9 +49,17 @@ public class CityListFragment extends LifecycleFragment {
         viewModel.getCitiesObservable().observe(this, new Observer<Cities>() {
             @Override
             public void onChanged(@Nullable Cities cities) {
-                if (cities != null && cities.getCities() != null) {
-                    binding.setIsLoading(false);
-                    mCityAdapter.setCityList(cities.getCities());
+                binding.setIsLoading(false);
+                if (cities != null) {
+                    binding.setIsSuccess(true);
+                    if (cities.getCities() != null && !cities.getCities().isEmpty()) {
+                        binding.setIsEmpty(false);
+                        mCityAdapter.setCityList(cities.getCities());
+                    } else {
+                        binding.setIsEmpty(true);
+                    }
+                } else {
+                    binding.setIsSuccess(false);
                 }
             }
         });

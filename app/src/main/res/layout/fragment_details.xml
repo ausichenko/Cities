@@ -4,60 +4,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="isLoading" type="boolean" />
         <variable name="city" type="com.azcltd.android.test.usichenko.cities.service.models.City"/>
     </data>
 
-    <FrameLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|center_horizontal"
+        android:padding="5dp"
+        android:orientation="vertical"
+        app:visibleGone="@{!isLoading}">
 
-        <ProgressBar
-            android:id="@+id/loading_project"
-            style="@style/Base.Widget.AppCompat.ProgressBar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical|center_horizontal"
-            android:textAlignment="center"
-            app:visibleGone="@{isLoading}"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical|center_horizontal"
-            android:padding="5dp"
-            android:orientation="vertical"
-            app:visibleGone="@{!isLoading}">
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_launcher" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="@{city.name}"
+                android:textAlignment="center"
+                android:paddingBottom="5dp"/>
+
+            <TextView
+                android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:text="@{city.description}"/>
 
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@mipmap/ic_launcher" />
-
-                <TextView
-                    android:id="@+id/name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:text="@{city.name}"
-                    android:textAlignment="center"
-                    android:paddingBottom="5dp"/>
-
-                <TextView
-                    android:id="@+id/description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@{city.description}"/>
-
-            </LinearLayout>
-
-        </ScrollView>
-
-    </FrameLayout>
+        </LinearLayout>
+    </ScrollView>
 </layout>

@@ -4,12 +4,13 @@
 
     <data>
         <variable name="isLoading" type="boolean" />
+        <variable name="isSuccess" type="boolean" />
+        <variable name="isEmpty" type="boolean" />
     </data>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <ProgressBar
             android:id="@+id/loading_cities"
@@ -19,13 +20,47 @@
             android:textAlignment="center"
             app:visibleGone="@{isLoading}"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/city_list"
-            android:contentDescription="City list"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="LinearLayoutManager"
-            app:visibleGone="@{!isLoading}"/>
+            app:visibleGone="@{!isLoading}">
 
-    </LinearLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:visibleGone="@{isSuccess}">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/city_list"
+                    android:contentDescription="City list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="LinearLayoutManager"
+                    app:visibleGone="@{!isEmpty}"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/empty_list"
+                    app:visibleGone="@{isEmpty}"/>
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Something wrong while loading"
+                    app:visibleGone="@{!isSuccess}"/>
+
+            </LinearLayout>
+
+        </FrameLayout>
+    </FrameLayout>
 </layout>

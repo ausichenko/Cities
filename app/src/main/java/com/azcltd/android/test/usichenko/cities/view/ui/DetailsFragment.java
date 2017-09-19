@@ -44,6 +44,5 @@ public class DetailsFragment extends LifecycleFragment {
         City city = getArguments().getParcelable(KEY_CITY);
 
         mBinding.setCity(city);
-        mBinding.setIsLoading(false);
     }
 }
