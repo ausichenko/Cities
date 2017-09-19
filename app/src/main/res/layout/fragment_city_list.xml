@@ -44,6 +44,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="@string/empty_list"
+                    android:textColor="@android:color/white"
                     app:visibleGone="@{isEmpty}"/>
 
             </FrameLayout>
@@ -57,7 +58,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Something wrong while loading"
+                    android:text="@string/loading_error"
+                    android:textColor="@android:color/white"
                     app:visibleGone="@{!isSuccess}"/>
 
             </LinearLayout>

@@ -22,19 +22,19 @@ import com.azcltd.android.test.usichenko.cities.viewmodel.CityListViewModel;
 public class CityListFragment extends LifecycleFragment {
 
     private CityAdapter mCityAdapter;
-    private FragmentCityListBinding binding;
+    private FragmentCityListBinding mBinding;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_city_list, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_city_list, container, false);
 
         mCityAdapter = new CityAdapter(mCityClickCallback);
-        binding.cityList.setAdapter(mCityAdapter);
-        binding.setIsLoading(true);
+        mBinding.cityList.setAdapter(mCityAdapter);
+        mBinding.setIsLoading(true);
 
-        return binding.getRoot();
+        return mBinding.getRoot();
     }
 
     @Override
@@ -49,17 +49,17 @@ public class CityListFragment extends LifecycleFragment {
         viewModel.getCitiesObservable().observe(this, new Observer<Cities>() {
             @Override
             public void onChanged(@Nullable Cities cities) {
-                binding.setIsLoading(false);
+                mBinding.setIsLoading(false);
                 if (cities != null) {
-                    binding.setIsSuccess(true);
+                    mBinding.setIsSuccess(true);
                     if (cities.getCities() != null && !cities.getCities().isEmpty()) {
-                        binding.setIsEmpty(false);
+                        mBinding.setIsEmpty(false);
                         mCityAdapter.setCityList(cities.getCities());
                     } else {
-                        binding.setIsEmpty(true);
+                        mBinding.setIsEmpty(true);
                     }
                 } else {
-                    binding.setIsSuccess(false);
+                    mBinding.setIsSuccess(false);
                 }
             }
         });

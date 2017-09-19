@@ -5,7 +5,7 @@
 
     <data>
         <variable name="city" type="com.azcltd.android.test.usichenko.cities.service.models.City"/>
-        <variable name="viewModel" type="com.azcltd.android.test.usichenko.cities.viewmodel.DetailsViewModel" />
+        <variable name="imageViewModel" type="com.azcltd.android.test.usichenko.cities.viewmodel.ImageViewModel" />
     </data>
 
     <ScrollView
@@ -19,25 +19,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <FrameLayout
+            <ImageView
+                android:id="@+id/imageView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    app:imageUrl="@{viewModel.imageUrl}" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{city.imageUrl}"
-                    android:textColor="@android:color/white"
-                    android:layout_gravity="bottom|end"/>
-
-            </FrameLayout>
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                app:imageUrl="@{imageViewModel.imageUrl}" />
 
             <TextView
                 android:id="@+id/name"

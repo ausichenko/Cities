@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Cities</string>
     <string name="empty_list">Data is empty\nYou can try again later.</string>
+    <string name="loading_error">Something wrong while loading</string>
 </resources>

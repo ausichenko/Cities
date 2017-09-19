@@ -8,16 +8,15 @@ import com.squareup.picasso.Picasso;
 
 import static com.azcltd.android.test.usichenko.cities.service.repo.AzoftService.HTTP_AZOFT_URL;
 
-public class DetailsViewModel {
+public class ImageViewModel {
 
     private String mImageUrl;
 
-    public void setImageUrl(String imageUrl) {
+    public ImageViewModel(String imageUrl) {
         mImageUrl = imageUrl;
     }
 
     public String getImageUrl() {
-        // The URL will usually come from a model (i.e Profile)
         return HTTP_AZOFT_URL.concat(mImageUrl);
     }
 
