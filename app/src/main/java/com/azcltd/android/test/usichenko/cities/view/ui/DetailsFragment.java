@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.azcltd.android.test.usichenko.cities.R;
 import com.azcltd.android.test.usichenko.cities.databinding.FragmentDetailsBinding;
 import com.azcltd.android.test.usichenko.cities.service.models.City;
+import com.azcltd.android.test.usichenko.cities.viewmodel.DetailsViewModel;
 
 public class DetailsFragment extends LifecycleFragment {
 
@@ -41,7 +42,10 @@ public class DetailsFragment extends LifecycleFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        DetailsViewModel viewModel = new DetailsViewModel();
         City city = getArguments().getParcelable(KEY_CITY);
+        viewModel.setImageUrl(city.imageUrl);
+        mBinding.setViewModel(viewModel);
 
         mBinding.setCity(city);
     }

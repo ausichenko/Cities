@@ -5,26 +5,39 @@
 
     <data>
         <variable name="city" type="com.azcltd.android.test.usichenko.cities.service.models.City"/>
+        <variable name="viewModel" type="com.azcltd.android.test.usichenko.cities.viewmodel.DetailsViewModel" />
     </data>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical|center_horizontal"
-        android:padding="5dp"
-        android:orientation="vertical"
-        app:visibleGone="@{!isLoading}">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/imageView"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@mipmap/ic_launcher" />
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    app:imageUrl="@{viewModel.imageUrl}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{city.imageUrl}"
+                    android:textColor="@android:color/white"
+                    android:layout_gravity="bottom|end"/>
+
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/name"

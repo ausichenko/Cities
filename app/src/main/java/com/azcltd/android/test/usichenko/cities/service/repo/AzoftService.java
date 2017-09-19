@@ -7,8 +7,8 @@ import retrofit2.http.GET;
 
 public interface AzoftService {
 
-    String HTTP_AZOFT_URL = "http://azcltd.com/";
+    String HTTP_AZOFT_URL = "http://azcltd.com/testTask/android/";
 
-    @GET("testTask/android/cities.json")
+    @GET("cities.json")
     Call<Cities> getCityList();
 }
