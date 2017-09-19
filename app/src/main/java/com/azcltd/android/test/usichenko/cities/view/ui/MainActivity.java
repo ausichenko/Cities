@@ -24,13 +24,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showDetails(City city) {
-        /*
-        DetailsFragment details = new DetailsFragment();
+        DetailsFragment detailsFragment = DetailsFragment.newInstance(city);
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content, detailsFragment)
                 .addToBackStack(null)
                 .commit();
-        */
     }
 }
