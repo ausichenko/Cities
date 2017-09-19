@@ -1,9 +1,6 @@
 package com.azcltd.android.test.usichenko.cities.service.repo;
 
 import com.azcltd.android.test.usichenko.cities.service.models.Cities;
-import com.azcltd.android.test.usichenko.cities.service.models.City;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

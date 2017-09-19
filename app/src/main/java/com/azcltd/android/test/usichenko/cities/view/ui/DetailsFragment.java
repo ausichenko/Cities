@@ -1,6 +1,6 @@
 package com.azcltd.android.test.usichenko.cities.view.ui;
 
-import android.support.v4.app.Fragment;
+import android.arch.lifecycle.LifecycleFragment;
 
-public class DetailsFragment extends Fragment {
+public class DetailsFragment extends LifecycleFragment {
 }

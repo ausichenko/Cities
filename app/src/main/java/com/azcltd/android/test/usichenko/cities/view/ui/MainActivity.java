@@ -1,32 +1,36 @@
 package com.azcltd.android.test.usichenko.cities.view.ui;
 
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.azcltd.android.test.usichenko.cities.R;
+import com.azcltd.android.test.usichenko.cities.service.models.City;
 
 public class MainActivity extends AppCompatActivity {
-
-    private CityListFragment mCityListFragment;
-    private Fragment mDetailsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initFragments();
-        changeFragment(mCityListFragment);
+        showCityListFragment();
     }
 
-    private void initFragments() {
-        mCityListFragment = new CityListFragment();
-    }
-
-    private void changeFragment(Fragment fragment) {
+    private void showCityListFragment() {
+        CityListFragment cityListFragment = new CityListFragment();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content, fragment)
+                .replace(R.id.content, cityListFragment)
                 .commit();
+    }
+
+    public void showDetails(City city) {
+        /*
+        DetailsFragment details = new DetailsFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content, detailsFragment)
+                .addToBackStack(null)
+                .commit();
+        */
     }
 }

@@ -5,9 +5,6 @@ import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
 import com.azcltd.android.test.usichenko.cities.service.models.Cities;
-import com.azcltd.android.test.usichenko.cities.service.models.City;
-
-import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -44,13 +41,13 @@ public class CityRepository {
         return sCityRepository;
     }
 
-    public LiveData<List<City>> getCityList() {
-        final MutableLiveData<List<City>> data = new MutableLiveData<>();
+    public LiveData<Cities> getCities() {
+        final MutableLiveData<Cities> data = new MutableLiveData<>();
 
         mAzoftService.getCityList().enqueue(new Callback<Cities>() {
             @Override
             public void onResponse(@NonNull Call<Cities> call, @NonNull Response<Cities> response) {
-                data.setValue(response.body().getCities());
+                data.setValue(response.body());
             }
 
             @Override

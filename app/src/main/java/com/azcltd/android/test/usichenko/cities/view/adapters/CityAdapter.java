@@ -9,15 +9,17 @@ import android.view.ViewGroup;
 import com.azcltd.android.test.usichenko.cities.R;
 import com.azcltd.android.test.usichenko.cities.databinding.CityListItemBinding;
 import com.azcltd.android.test.usichenko.cities.service.models.City;
+import com.azcltd.android.test.usichenko.cities.view.callback.CityClickCallback;
 
 import java.util.List;
 
 public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder> {
 
     private List<City> mCityList;
+    private CityClickCallback mCityClickCallback;
 
-    public CityAdapter() {
-
+    public CityAdapter(CityClickCallback cityClickCallback) {
+        mCityClickCallback = cityClickCallback;
     }
 
     public void setCityList(final List<City> cityList) {
@@ -60,7 +62,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
                 .inflate(LayoutInflater.from(parent.getContext()), R.layout.city_list_item,
                         parent, false);
 
-        //binding.setCallback(projectClickCallback);
+        binding.setCallback(mCityClickCallback);
 
         return new CityViewHolder(binding);
     }

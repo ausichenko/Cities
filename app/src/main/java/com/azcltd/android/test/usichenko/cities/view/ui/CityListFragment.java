@@ -1,5 +1,6 @@
 package com.azcltd.android.test.usichenko.cities.view.ui;
 
+import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleFragment;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -12,11 +13,11 @@ import android.view.ViewGroup;
 
 import com.azcltd.android.test.usichenko.cities.R;
 import com.azcltd.android.test.usichenko.cities.databinding.FragmentCityListBinding;
+import com.azcltd.android.test.usichenko.cities.service.models.Cities;
 import com.azcltd.android.test.usichenko.cities.service.models.City;
 import com.azcltd.android.test.usichenko.cities.view.adapters.CityAdapter;
+import com.azcltd.android.test.usichenko.cities.view.callback.CityClickCallback;
 import com.azcltd.android.test.usichenko.cities.viewmodel.CityListViewModel;
-
-import java.util.List;
 
 public class CityListFragment extends LifecycleFragment {
 
@@ -29,7 +30,7 @@ public class CityListFragment extends LifecycleFragment {
                              @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_city_list, container, false);
 
-        mCityAdapter = new CityAdapter();//projectClickCallback);
+        mCityAdapter = new CityAdapter(mCityClickCallback);
         binding.cityList.setAdapter(mCityAdapter);
         binding.setIsLoading(true);
 
@@ -45,14 +46,23 @@ public class CityListFragment extends LifecycleFragment {
     }
 
     private void observeViewModel(CityListViewModel viewModel) {
-        viewModel.getCityListObservable().observe(this, new Observer<List<City>>() {
+        viewModel.getCitiesObservable().observe(this, new Observer<Cities>() {
             @Override
-            public void onChanged(@Nullable List<City> cities) {
-                if (cities != null) {
+            public void onChanged(@Nullable Cities cities) {
+                if (cities != null && cities.getCities() != null) {
                     binding.setIsLoading(false);
-                    mCityAdapter.setCityList(cities);
+                    mCityAdapter.setCityList(cities.getCities());
                 }
             }
         });
     }
+
+    private final CityClickCallback mCityClickCallback = new CityClickCallback() {
+        @Override
+        public void onClick(City city) {
+            if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
+                ((MainActivity) getActivity()).showDetails(city);
+            }
+        }
+    };
 }
