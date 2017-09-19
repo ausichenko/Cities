@@ -17,6 +17,7 @@ import com.azcltd.android.test.usichenko.cities.service.models.Cities;
 import com.azcltd.android.test.usichenko.cities.service.models.City;
 import com.azcltd.android.test.usichenko.cities.view.adapters.CityAdapter;
 import com.azcltd.android.test.usichenko.cities.view.callback.CityClickCallback;
+import com.azcltd.android.test.usichenko.cities.view.callback.TryAgainCallback;
 import com.azcltd.android.test.usichenko.cities.viewmodel.CityListViewModel;
 
 public class CityListFragment extends LifecycleFragment {
@@ -42,6 +43,13 @@ public class CityListFragment extends LifecycleFragment {
         super.onActivityCreated(savedInstanceState);
         final CityListViewModel viewModel = ViewModelProviders.of(this).get(CityListViewModel.class);
 
+        mBinding.setCallback(new TryAgainCallback() {
+            @Override
+            public void onClick() {
+                reload(viewModel);
+            }
+        });
+
         observeViewModel(viewModel);
     }
 
@@ -63,6 +71,13 @@ public class CityListFragment extends LifecycleFragment {
                 }
             }
         });
+    }
+
+    private void reload(CityListViewModel viewModel) {
+        viewModel.getCitiesObservable().removeObservers(CityListFragment.this);
+        viewModel.initObservable();
+        mBinding.setIsLoading(true);
+        observeViewModel(viewModel);
     }
 
     private final CityClickCallback mCityClickCallback = new CityClickCallback() {

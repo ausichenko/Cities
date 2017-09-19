@@ -6,6 +6,7 @@
         <variable name="isLoading" type="boolean" />
         <variable name="isSuccess" type="boolean" />
         <variable name="isEmpty" type="boolean" />
+        <variable name="callback" type="com.azcltd.android.test.usichenko.cities.view.callback.TryAgainCallback" />
     </data>
 
     <FrameLayout
@@ -53,14 +54,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                app:visibleGone="@{!isSuccess}" >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/loading_error"
-                    android:textColor="@android:color/white"
-                    app:visibleGone="@{!isSuccess}"/>
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    style="@style/Base.Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Try again"
+                    android:onClick="@{() ->  callback.onClick()}" />
 
             </LinearLayout>
 
