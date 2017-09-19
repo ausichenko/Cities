@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="isLoading" type="boolean" />
+        <variable name="isSuccess" type="boolean" />
+        <variable name="isEmpty" type="boolean" />
+        <variable name="callback" type="com.azcltd.android.test.usichenko.cities.view.callback.TryAgainCallback" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary">
+
+        <ProgressBar
+            android:id="@+id/loading_cities"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:visibleGone="@{isLoading}"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:visibleGone="@{!isLoading}">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:visibleGone="@{isSuccess}">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/city_list"
+                    android:contentDescription="City list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="LinearLayoutManager"
+                    app:visibleGone="@{!isEmpty}"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/empty_list"
+                    android:textColor="@android:color/white"
+                    app:visibleGone="@{isEmpty}"/>
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:visibleGone="@{!isSuccess}" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loading_error"
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    style="@style/Base.Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Try again"
+                    android:onClick="@{() ->  callback.onClick()}" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+    </FrameLayout>
+</layout>
