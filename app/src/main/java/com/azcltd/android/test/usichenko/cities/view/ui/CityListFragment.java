@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.azcltd.android.test.usichenko.cities.R;
-import com.azcltd.android.test.usichenko.cities.databinding.FragmentCityListBinding;
+import com.azcltd.android.test.usichenko.cities.databinding.FragmentCitiesBinding;
 import com.azcltd.android.test.usichenko.cities.view.adapters.CityAdapter;
 import com.azcltd.android.test.usichenko.cities.view.callback.CityClickListener;
 import com.azcltd.android.test.usichenko.cities.viewmodel.CityListViewModel;
@@ -20,13 +20,13 @@ import com.azcltd.android.test.usichenko.cities.viewmodel.CityListViewModel;
 public class CityListFragment extends Fragment {
 
     private CityAdapter mCityAdapter;
-    private FragmentCityListBinding mBinding;
+    private FragmentCitiesBinding mBinding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_city_list, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_cities, container, false);
 
         mCityAdapter = new CityAdapter(mCityClickCallback);
         mBinding.cityList.setAdapter(mCityAdapter);

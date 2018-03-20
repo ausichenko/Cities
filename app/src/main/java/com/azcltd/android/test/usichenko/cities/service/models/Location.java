@@ -4,15 +4,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 public class Location implements Parcelable {
 
-    @SerializedName("latitude")
     @Expose
     public double latitude;
 
-    @SerializedName("longitude")
     @Expose
     public double longitude;
 

@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.azcltd.android.test.usichenko.cities.R;
-import com.azcltd.android.test.usichenko.cities.databinding.CityListItemBinding;
+import com.azcltd.android.test.usichenko.cities.databinding.ItemCityBinding;
 import com.azcltd.android.test.usichenko.cities.service.models.City;
 import com.azcltd.android.test.usichenko.cities.view.callback.CityClickListener;
 import com.squareup.picasso.Picasso;
@@ -32,8 +32,8 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
     @NonNull
     @Override
     public CityAdapter.CityViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        CityListItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(
-                parent.getContext()), R.layout.city_list_item, parent, false);
+        ItemCityBinding binding = DataBindingUtil.inflate(LayoutInflater.from(
+                parent.getContext()), R.layout.item_city, parent, false);
 
         return new CityViewHolder(binding);
     }
@@ -51,9 +51,9 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
 
     static class CityViewHolder extends RecyclerView.ViewHolder {
 
-        private CityListItemBinding mBinding;
+        private ItemCityBinding mBinding;
 
-        CityViewHolder(CityListItemBinding binding) {
+        CityViewHolder(ItemCityBinding binding) {
             super(binding.getRoot());
             this.mBinding = binding;
         }
