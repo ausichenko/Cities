@@ -17,7 +17,7 @@ import com.azcltd.android.test.usichenko.cities.databinding.FragmentCityListBind
 import com.azcltd.android.test.usichenko.cities.service.models.Cities;
 import com.azcltd.android.test.usichenko.cities.service.models.City;
 import com.azcltd.android.test.usichenko.cities.view.adapters.CityAdapter;
-import com.azcltd.android.test.usichenko.cities.view.callback.CityClickCallback;
+import com.azcltd.android.test.usichenko.cities.view.callback.CityClickListener;
 import com.azcltd.android.test.usichenko.cities.view.callback.TryAgainCallback;
 import com.azcltd.android.test.usichenko.cities.viewmodel.CityListViewModel;
 
@@ -63,7 +63,7 @@ public class CityListFragment extends Fragment {
                     mBinding.setIsSuccess(true);
                     if (cities.getCities() != null && !cities.getCities().isEmpty()) {
                         mBinding.setIsEmpty(false);
-                        mCityAdapter.setCityList(cities.getCities());
+                        mCityAdapter.setCities(cities.getCities());
                     } else {
                         mBinding.setIsEmpty(true);
                     }
@@ -81,7 +81,7 @@ public class CityListFragment extends Fragment {
         observeViewModel(viewModel);
     }
 
-    private final CityClickCallback mCityClickCallback = new CityClickCallback() {
+    private final CityClickListener mCityClickCallback = new CityClickListener() {
         @Override
         public void onClick(City city) {
             if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
