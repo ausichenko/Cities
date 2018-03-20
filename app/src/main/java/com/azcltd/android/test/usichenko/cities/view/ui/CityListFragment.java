@@ -1,7 +1,7 @@
 package com.azcltd.android.test.usichenko.cities.view.ui;
 
-import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,14 +13,31 @@ import android.view.ViewGroup;
 
 import com.azcltd.android.test.usichenko.cities.R;
 import com.azcltd.android.test.usichenko.cities.databinding.FragmentCitiesBinding;
+import com.azcltd.android.test.usichenko.cities.service.models.City;
 import com.azcltd.android.test.usichenko.cities.view.adapters.CityAdapter;
-import com.azcltd.android.test.usichenko.cities.view.callback.CityClickListener;
+import com.azcltd.android.test.usichenko.cities.view.callback.OnCityClickListener;
 import com.azcltd.android.test.usichenko.cities.viewmodel.CityListViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CityListFragment extends Fragment {
 
     private CityAdapter mCityAdapter;
     private FragmentCitiesBinding mBinding;
+
+    private OnCityClickListener mCityClickListener;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            mCityClickListener = (OnCityClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement OnCityClickListener");
+        }
+    }
 
     @Nullable
     @Override
@@ -28,7 +45,7 @@ public class CityListFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_cities, container, false);
 
-        mCityAdapter = new CityAdapter(mCityClickCallback);
+        mCityAdapter = new CityAdapter(mCityClickListener);
         mBinding.cityList.setAdapter(mCityAdapter);
         mBinding.setIsLoading(true);
 
@@ -68,10 +85,4 @@ public class CityListFragment extends Fragment {
         mBinding.setIsLoading(true);
         observeViewModel(viewModel);
     }
-
-    private final CityClickListener mCityClickCallback = city -> {
-        if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
-            ((MainActivity) getActivity()).showDetails(city);
-        }
-    };
 }

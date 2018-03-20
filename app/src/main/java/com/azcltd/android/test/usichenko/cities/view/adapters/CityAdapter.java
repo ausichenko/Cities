@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.azcltd.android.test.usichenko.cities.R;
 import com.azcltd.android.test.usichenko.cities.databinding.ItemCityBinding;
 import com.azcltd.android.test.usichenko.cities.service.models.City;
-import com.azcltd.android.test.usichenko.cities.view.callback.CityClickListener;
+import com.azcltd.android.test.usichenko.cities.view.callback.OnCityClickListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -18,9 +18,9 @@ import java.util.List;
 public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder> {
 
     private List<City> mCities = new ArrayList<>();
-    private CityClickListener mCityClickListener;
+    private OnCityClickListener mCityClickListener;
 
-    public CityAdapter(CityClickListener clickListener) {
+    public CityAdapter(OnCityClickListener clickListener) {
         mCityClickListener = clickListener;
     }
 
@@ -58,7 +58,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
             this.mBinding = binding;
         }
 
-        void bind(final City city, final CityClickListener listener) {
+        void bind(final City city, final OnCityClickListener listener) {
             mBinding.name.setText(city.name);
 
             Picasso.with(mBinding.preview.getContext())
@@ -66,7 +66,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
                     .placeholder(R.drawable.ic_placeholder)
                     .into(mBinding.preview);
 
-            mBinding.card.setOnClickListener(v -> listener.onClick(city));
+            mBinding.card.setOnClickListener(v -> listener.onCityClick(city));
 
             mBinding.executePendingBindings();
         }
