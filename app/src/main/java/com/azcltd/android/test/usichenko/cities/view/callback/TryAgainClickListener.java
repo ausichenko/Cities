@@ -1,5 +1,5 @@
 package com.azcltd.android.test.usichenko.cities.view.callback;
 
-public interface TryAgainCallback {
+public interface TryAgainClickListener {
     void onClick();
 }

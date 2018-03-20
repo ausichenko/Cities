@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         CityListFragment cityListFragment = new CityListFragment();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content, cityListFragment)
+                .replace(R.id.container, cityListFragment)
                 .commit();
     }
 
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         DetailsFragment detailsFragment = DetailsFragment.newInstance(city);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content, detailsFragment)
+                .replace(R.id.container, detailsFragment)
                 .addToBackStack(null)
                 .commit();
     }

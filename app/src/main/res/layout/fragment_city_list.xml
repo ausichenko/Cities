@@ -6,7 +6,7 @@
         <variable name="isLoading" type="boolean" />
         <variable name="isSuccess" type="boolean" />
         <variable name="isEmpty" type="boolean" />
-        <variable name="callback" type="com.azcltd.android.test.usichenko.cities.view.callback.TryAgainCallback" />
+        <variable name="callback" type="com.azcltd.android.test.usichenko.cities.view.callback.TryAgainClickListener" />
     </data>
 
     <FrameLayout
