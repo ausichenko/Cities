@@ -10,7 +10,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary">
+            android:background="@color/primary">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view"
@@ -22,7 +22,7 @@
                 android:id="@+id/progress_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorPrimary"
+                android:background="@color/primary"
                 android:clickable="false"
                 android:focusable="false"
                 android:gravity="center"
@@ -40,7 +40,7 @@
                 android:id="@+id/empty_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorPrimary"
+                android:background="@color/primary"
                 android:clickable="false"
                 android:focusable="false"
                 android:gravity="center"
@@ -59,7 +59,7 @@
                 android:id="@+id/error_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorPrimary"
+                android:background="@color/primary"
                 android:clickable="false"
                 android:focusable="false"
                 android:gravity="center"

@@ -41,7 +41,7 @@ public class CityListFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_cities, container, false);
 
-        mBinding.refreshLayout.setColorSchemeResources(R.color.colorAccent);
+        mBinding.refreshLayout.setColorSchemeResources(R.color.accent);
 
         mCityAdapter = new CityAdapter(mCityClickListener);
         mBinding.recyclerView.setAdapter(mCityAdapter);
