@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.azcltd.android.test.usichenko.cities.R;
 import com.azcltd.android.test.usichenko.cities.databinding.ItemCityBinding;
 import com.azcltd.android.test.usichenko.cities.service.models.City;
-import com.azcltd.android.test.usichenko.cities.view.callback.OnCityClickListener;
+import com.azcltd.android.test.usichenko.cities.view.callbacks.OnCityClickListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

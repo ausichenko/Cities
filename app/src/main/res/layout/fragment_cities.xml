@@ -2,76 +2,80 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <variable name="isLoading" type="boolean" />
-        <variable name="isSuccess" type="boolean" />
-        <variable name="isEmpty" type="boolean" />
-        <variable name="callback" type="com.azcltd.android.test.usichenko.cities.view.callback.TryAgainClickListener" />
-    </data>
-
-    <FrameLayout
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimary">
-
-        <ProgressBar
-            android:id="@+id/loading_cities"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:visibleGone="@{isLoading}"/>
+        android:layout_height="match_parent">
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:visibleGone="@{!isLoading}">
+            android:background="@color/colorPrimary">
 
-            <FrameLayout
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:visibleGone="@{isSuccess}">
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/city_list"
-                    android:contentDescription="City list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layoutManager="LinearLayoutManager"
-                    app:visibleGone="@{!isEmpty}"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="@string/empty_list"
-                    android:textColor="@android:color/white"
-                    app:visibleGone="@{isEmpty}"/>
-
-            </FrameLayout>
+                app:layoutManager="LinearLayoutManager" />
 
             <LinearLayout
+                android:id="@+id/progress_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/colorPrimary"
+                android:clickable="false"
+                android:focusable="false"
                 android:gravity="center"
                 android:orientation="vertical"
-                app:visibleGone="@{!isSuccess}" >
+                android:visibility="gone">
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/empty_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"
+                android:clickable="false"
+                android:focusable="false"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/loading_error"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    android:text="@string/empty_list" />
 
-                <Button
-                    style="@style/Base.Widget.AppCompat.Button.Colored"
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/error_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"
+                android:clickable="false"
+                android:focusable="false"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Try again"
-                    android:onClick="@{() ->  callback.onClick()}" />
+                    android:textColor="@android:color/white"
+                    android:text="@string/loading_error" />
 
             </LinearLayout>
 
         </FrameLayout>
-    </FrameLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 </layout>

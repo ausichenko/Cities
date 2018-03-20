@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.azcltd.android.test.usichenko.cities.R;
 import com.azcltd.android.test.usichenko.cities.service.models.City;
-import com.azcltd.android.test.usichenko.cities.view.callback.OnCityClickListener;
+import com.azcltd.android.test.usichenko.cities.view.callbacks.OnCityClickListener;
 
 public class MainActivity extends AppCompatActivity implements OnCityClickListener {
 

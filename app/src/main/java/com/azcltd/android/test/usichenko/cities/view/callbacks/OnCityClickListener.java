@@ -1,4 +1,4 @@
-package com.azcltd.android.test.usichenko.cities.view.callback;
+package com.azcltd.android.test.usichenko.cities.view.callbacks;
 
 import com.azcltd.android.test.usichenko.cities.service.models.City;
 

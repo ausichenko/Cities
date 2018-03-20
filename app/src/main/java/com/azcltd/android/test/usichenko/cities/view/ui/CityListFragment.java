@@ -13,13 +13,9 @@ import android.view.ViewGroup;
 
 import com.azcltd.android.test.usichenko.cities.R;
 import com.azcltd.android.test.usichenko.cities.databinding.FragmentCitiesBinding;
-import com.azcltd.android.test.usichenko.cities.service.models.City;
 import com.azcltd.android.test.usichenko.cities.view.adapters.CityAdapter;
-import com.azcltd.android.test.usichenko.cities.view.callback.OnCityClickListener;
+import com.azcltd.android.test.usichenko.cities.view.callbacks.OnCityClickListener;
 import com.azcltd.android.test.usichenko.cities.viewmodel.CityListViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CityListFragment extends Fragment {
 
@@ -45,9 +41,10 @@ public class CityListFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_cities, container, false);
 
+        mBinding.refreshLayout.setColorSchemeResources(R.color.colorAccent);
+
         mCityAdapter = new CityAdapter(mCityClickListener);
-        mBinding.cityList.setAdapter(mCityAdapter);
-        mBinding.setIsLoading(true);
+        mBinding.recyclerView.setAdapter(mCityAdapter);
 
         return mBinding.getRoot();
     }
@@ -57,32 +54,38 @@ public class CityListFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         final CityListViewModel viewModel = ViewModelProviders.of(this).get(CityListViewModel.class);
 
-        mBinding.setCallback(() -> reload(viewModel));
+        mBinding.refreshLayout.setOnRefreshListener(() -> reload(viewModel));
 
+        observeViewModel(viewModel);
+    }
+
+    private void reload(CityListViewModel viewModel) {
+        mBinding.progressLayout.setVisibility(View.VISIBLE);
+        viewModel.getCitiesObservable().removeObservers(CityListFragment.this);
+        viewModel.initObservable();
         observeViewModel(viewModel);
     }
 
     private void observeViewModel(CityListViewModel viewModel) {
+        mBinding.progressLayout.setVisibility(View.VISIBLE);
         viewModel.getCitiesObservable().observe(this, cities -> {
-            mBinding.setIsLoading(false);
+            mBinding.progressLayout.setVisibility(View.GONE);
+            if (mBinding.refreshLayout.isRefreshing()) {
+                mBinding.refreshLayout.setRefreshing(false);
+            }
             if (cities != null) {
-                mBinding.setIsSuccess(true);
                 if (cities.getCities() != null && !cities.getCities().isEmpty()) {
-                    mBinding.setIsEmpty(false);
+                    mBinding.emptyLayout.setVisibility(View.GONE);
                     mCityAdapter.setCities(cities.getCities());
+                    mCityAdapter.notifyDataSetChanged();
                 } else {
-                    mBinding.setIsEmpty(true);
+                    mBinding.emptyLayout.setVisibility(View.VISIBLE);
                 }
             } else {
-                mBinding.setIsSuccess(false);
+                mBinding.errorLayout.setVisibility(View.VISIBLE);
             }
         });
     }
 
-    private void reload(CityListViewModel viewModel) {
-        viewModel.getCitiesObservable().removeObservers(CityListFragment.this);
-        viewModel.initObservable();
-        mBinding.setIsLoading(true);
-        observeViewModel(viewModel);
-    }
+
 }
