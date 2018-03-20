@@ -1,9 +1,10 @@
 package com.azcltd.android.test.usichenko.cities.view.ui;
 
-import android.arch.lifecycle.LifecycleFragment;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,7 @@ import com.azcltd.android.test.usichenko.cities.databinding.FragmentDetailsBindi
 import com.azcltd.android.test.usichenko.cities.service.models.City;
 import com.azcltd.android.test.usichenko.cities.viewmodel.ImageViewModel;
 
-public class DetailsFragment extends LifecycleFragment {
+public class DetailsFragment extends Fragment {
 
     private static final String KEY_CITY = "key_city";
 
@@ -30,7 +31,7 @@ public class DetailsFragment extends LifecycleFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil
                 .inflate(inflater, R.layout.fragment_details, container, false);
