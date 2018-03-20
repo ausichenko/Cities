@@ -60,32 +60,46 @@ public class CityListFragment extends Fragment {
     }
 
     private void reload(CityListViewModel viewModel) {
-        mBinding.progressLayout.setVisibility(View.VISIBLE);
         viewModel.getCitiesObservable().removeObservers(CityListFragment.this);
         viewModel.initObservable();
         observeViewModel(viewModel);
     }
 
     private void observeViewModel(CityListViewModel viewModel) {
-        mBinding.progressLayout.setVisibility(View.VISIBLE);
+        showProgress();
         viewModel.getCitiesObservable().observe(this, cities -> {
-            mBinding.progressLayout.setVisibility(View.GONE);
-            if (mBinding.refreshLayout.isRefreshing()) {
-                mBinding.refreshLayout.setRefreshing(false);
-            }
+            hideProgress();
             if (cities != null) {
                 if (cities.getCities() != null && !cities.getCities().isEmpty()) {
-                    mBinding.emptyLayout.setVisibility(View.GONE);
                     mCityAdapter.setCities(cities.getCities());
                     mCityAdapter.notifyDataSetChanged();
                 } else {
-                    mBinding.emptyLayout.setVisibility(View.VISIBLE);
+                    showEmpty();
                 }
             } else {
-                mBinding.errorLayout.setVisibility(View.VISIBLE);
+                showError();
             }
         });
     }
 
+    private void showProgress() {
+        mBinding.emptyLayout.setVisibility(View.GONE);
+        mBinding.errorLayout.setVisibility(View.GONE);
+        mBinding.progressLayout.setVisibility(View.VISIBLE);
+    }
 
+    private void hideProgress() {
+        mBinding.progressLayout.setVisibility(View.GONE);
+        if (mBinding.refreshLayout.isRefreshing()) {
+            mBinding.refreshLayout.setRefreshing(false);
+        }
+    }
+
+    private void showEmpty() {
+        mBinding.emptyLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void showError() {
+        mBinding.errorLayout.setVisibility(View.VISIBLE);
+    }
 }

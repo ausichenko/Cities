@@ -1,4 +1,4 @@
-package com.azcltd.android.test.usichenko.cities.service.repo;
+package com.azcltd.android.test.usichenko.cities.service.repository;
 
 import com.azcltd.android.test.usichenko.cities.service.models.Cities;
 

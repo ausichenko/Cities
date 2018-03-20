@@ -1,4 +1,4 @@
-package com.azcltd.android.test.usichenko.cities.service.repo;
+package com.azcltd.android.test.usichenko.cities.service.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
@@ -16,6 +16,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CityRepository {
 
+    public synchronized static CityRepository getInstance() {
+        if (sCityRepository == null) {
+            sCityRepository = new CityRepository();
+        }
+
+        return sCityRepository;
+    }
+
     private AzoftService mAzoftService;
     private static CityRepository sCityRepository;
 
@@ -31,14 +39,6 @@ public class CityRepository {
                 .build();
 
         mAzoftService = retrofit.create(AzoftService.class);
-    }
-
-    public synchronized static CityRepository getInstance() {
-        if (sCityRepository == null) {
-            sCityRepository = new CityRepository();
-        }
-
-        return sCityRepository;
     }
 
     public LiveData<Cities> getCities() {
