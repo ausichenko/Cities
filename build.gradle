@@ -14,6 +14,29 @@ allprojects {
     }
 }
 
+
+ext {
+    compileSdkVersion = 27
+    buildToolsVersion = "26.0.2"
+    minSdkVersion = 16
+    targetSdkVersion = 27
+
+    appVersionCode = 2
+    appVersionName = "1.1.0"
+
+    supportVersion = "27.1.0"
+    lifecycleVersion = "1.1.0"
+    retrofitVersion = "2.3.0"
+    okhttpVersion = "3.9.1"
+    okhttpLoggingVersion = "3.4.1"
+    gsonVersion = "2.8.2"
+
+    picassoVersion = "2.5.2"
+
+    junitVersion = "4.12"
+    espressoVersion = "3.0.1"
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
