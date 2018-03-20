@@ -5,8 +5,9 @@ import android.os.Bundle;
 
 import com.azcltd.android.test.usichenko.cities.R;
 import com.azcltd.android.test.usichenko.cities.service.models.City;
+import com.azcltd.android.test.usichenko.cities.view.callbacks.OnCityClickListener;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnCityClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,15 +20,20 @@ public class MainActivity extends AppCompatActivity {
         CityListFragment cityListFragment = new CityListFragment();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content, cityListFragment)
+                .replace(R.id.container, cityListFragment)
                 .commit();
     }
 
-    public void showDetails(City city) {
+    @Override
+    public void onCityClick(City city) {
+        showDetails(city);
+    }
+
+    private void showDetails(City city) {
         DetailsFragment detailsFragment = DetailsFragment.newInstance(city);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content, detailsFragment)
+                .replace(R.id.container, detailsFragment)
                 .addToBackStack(null)
                 .commit();
     }

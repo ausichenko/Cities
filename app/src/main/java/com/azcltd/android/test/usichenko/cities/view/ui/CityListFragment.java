@@ -1,39 +1,50 @@
 package com.azcltd.android.test.usichenko.cities.view.ui;
 
-import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.LifecycleFragment;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.azcltd.android.test.usichenko.cities.R;
-import com.azcltd.android.test.usichenko.cities.databinding.FragmentCityListBinding;
-import com.azcltd.android.test.usichenko.cities.service.models.Cities;
-import com.azcltd.android.test.usichenko.cities.service.models.City;
+import com.azcltd.android.test.usichenko.cities.databinding.FragmentCitiesBinding;
 import com.azcltd.android.test.usichenko.cities.view.adapters.CityAdapter;
-import com.azcltd.android.test.usichenko.cities.view.callback.CityClickCallback;
-import com.azcltd.android.test.usichenko.cities.view.callback.TryAgainCallback;
+import com.azcltd.android.test.usichenko.cities.view.callbacks.OnCityClickListener;
 import com.azcltd.android.test.usichenko.cities.viewmodel.CityListViewModel;
 
-public class CityListFragment extends LifecycleFragment {
+public class CityListFragment extends Fragment {
 
     private CityAdapter mCityAdapter;
-    private FragmentCityListBinding mBinding;
+    private FragmentCitiesBinding mBinding;
+
+    private OnCityClickListener mCityClickListener;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            mCityClickListener = (OnCityClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement OnCityClickListener");
+        }
+    }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_city_list, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_cities, container, false);
 
-        mCityAdapter = new CityAdapter(mCityClickCallback);
-        mBinding.cityList.setAdapter(mCityAdapter);
-        mBinding.setIsLoading(true);
+        mBinding.refreshLayout.setColorSchemeResources(R.color.accent);
+
+        mCityAdapter = new CityAdapter(mCityClickListener);
+        mBinding.recyclerView.setAdapter(mCityAdapter);
 
         return mBinding.getRoot();
     }
@@ -43,49 +54,52 @@ public class CityListFragment extends LifecycleFragment {
         super.onActivityCreated(savedInstanceState);
         final CityListViewModel viewModel = ViewModelProviders.of(this).get(CityListViewModel.class);
 
-        mBinding.setCallback(new TryAgainCallback() {
-            @Override
-            public void onClick() {
-                reload(viewModel);
-            }
-        });
+        mBinding.refreshLayout.setOnRefreshListener(() -> reload(viewModel));
 
         observeViewModel(viewModel);
-    }
-
-    private void observeViewModel(CityListViewModel viewModel) {
-        viewModel.getCitiesObservable().observe(this, new Observer<Cities>() {
-            @Override
-            public void onChanged(@Nullable Cities cities) {
-                mBinding.setIsLoading(false);
-                if (cities != null) {
-                    mBinding.setIsSuccess(true);
-                    if (cities.getCities() != null && !cities.getCities().isEmpty()) {
-                        mBinding.setIsEmpty(false);
-                        mCityAdapter.setCityList(cities.getCities());
-                    } else {
-                        mBinding.setIsEmpty(true);
-                    }
-                } else {
-                    mBinding.setIsSuccess(false);
-                }
-            }
-        });
     }
 
     private void reload(CityListViewModel viewModel) {
         viewModel.getCitiesObservable().removeObservers(CityListFragment.this);
         viewModel.initObservable();
-        mBinding.setIsLoading(true);
         observeViewModel(viewModel);
     }
 
-    private final CityClickCallback mCityClickCallback = new CityClickCallback() {
-        @Override
-        public void onClick(City city) {
-            if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
-                ((MainActivity) getActivity()).showDetails(city);
+    private void observeViewModel(CityListViewModel viewModel) {
+        showProgress();
+        viewModel.getCitiesObservable().observe(this, cities -> {
+            hideProgress();
+            if (cities != null) {
+                if (cities.getCities() != null && !cities.getCities().isEmpty()) {
+                    mCityAdapter.setCities(cities.getCities());
+                    mCityAdapter.notifyDataSetChanged();
+                } else {
+                    showEmpty();
+                }
+            } else {
+                showError();
             }
+        });
+    }
+
+    private void showProgress() {
+        mBinding.emptyLayout.setVisibility(View.GONE);
+        mBinding.errorLayout.setVisibility(View.GONE);
+        mBinding.progressLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void hideProgress() {
+        mBinding.progressLayout.setVisibility(View.GONE);
+        if (mBinding.refreshLayout.isRefreshing()) {
+            mBinding.refreshLayout.setRefreshing(false);
         }
-    };
+    }
+
+    private void showEmpty() {
+        mBinding.emptyLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void showError() {
+        mBinding.errorLayout.setVisibility(View.VISIBLE);
+    }
 }

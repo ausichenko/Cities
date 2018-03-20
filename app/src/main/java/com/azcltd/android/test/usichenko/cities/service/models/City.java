@@ -8,15 +8,12 @@ import com.google.gson.annotations.SerializedName;
 
 public class City implements Parcelable {
 
-    @SerializedName("id")
     @Expose
     public int id;
 
-    @SerializedName("name")
     @Expose
     public String name;
 
-    @SerializedName("description")
     @Expose
     public String description;
 
@@ -24,11 +21,9 @@ public class City implements Parcelable {
     @Expose
     public String imageUrl;
 
-    @SerializedName("country")
     @Expose
     public String country;
 
-    @SerializedName("location")
     @Expose
     public Location location;
 

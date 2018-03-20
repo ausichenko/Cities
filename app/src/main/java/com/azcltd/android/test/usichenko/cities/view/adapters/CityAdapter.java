@@ -1,62 +1,74 @@
 package com.azcltd.android.test.usichenko.cities.view.adapters;
 
 import android.databinding.DataBindingUtil;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.azcltd.android.test.usichenko.cities.R;
-import com.azcltd.android.test.usichenko.cities.databinding.CityListItemBinding;
+import com.azcltd.android.test.usichenko.cities.databinding.ItemCityBinding;
 import com.azcltd.android.test.usichenko.cities.service.models.City;
-import com.azcltd.android.test.usichenko.cities.view.callback.CityClickCallback;
-import com.azcltd.android.test.usichenko.cities.viewmodel.ImageViewModel;
+import com.azcltd.android.test.usichenko.cities.view.callbacks.OnCityClickListener;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder> {
 
-    private List<City> mCityList;
-    private CityClickCallback mCityClickCallback;
+    private List<City> mCities = new ArrayList<>();
+    private OnCityClickListener mCityClickListener;
 
-    public CityAdapter(CityClickCallback cityClickCallback) {
-        mCityClickCallback = cityClickCallback;
+    public CityAdapter(OnCityClickListener clickListener) {
+        mCityClickListener = clickListener;
     }
 
-    public void setCityList(final List<City> cityList) {
-        mCityList = cityList;
+    public void setCities(final List<City> cities) {
+        mCities.clear();
+        mCities.addAll(cities);
     }
 
+    @NonNull
     @Override
-    public CityAdapter.CityViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        CityListItemBinding binding = DataBindingUtil
-                .inflate(LayoutInflater.from(parent.getContext()), R.layout.city_list_item,
-                        parent, false);
-
-        binding.setCallback(mCityClickCallback);
+    public CityAdapter.CityViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        ItemCityBinding binding = DataBindingUtil.inflate(LayoutInflater.from(
+                parent.getContext()), R.layout.item_city, parent, false);
 
         return new CityViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(CityAdapter.CityViewHolder holder, int position) {
-        City city = mCityList.get(position);
-        holder.binding.setCity(city);
-        holder.binding.setImageViewModel(new ImageViewModel(city.imageUrl));
-        holder.binding.executePendingBindings();
+    public void onBindViewHolder(@NonNull CityAdapter.CityViewHolder holder, int position) {
+        City city = mCities.get(position);
+        holder.bind(city, mCityClickListener);
     }
 
     @Override
     public int getItemCount() {
-        return mCityList != null ? mCityList.size() : 0;
+        return mCities != null ? mCities.size() : 0;
     }
 
     static class CityViewHolder extends RecyclerView.ViewHolder {
 
-        final CityListItemBinding binding;
+        private ItemCityBinding mBinding;
 
-        public CityViewHolder(CityListItemBinding binding) {
+        CityViewHolder(ItemCityBinding binding) {
             super(binding.getRoot());
-            this.binding = binding;
+            this.mBinding = binding;
+        }
+
+        void bind(final City city, final OnCityClickListener listener) {
+            mBinding.name.setText(city.name);
+
+            Picasso.with(mBinding.preview.getContext())
+                    .load(city.imageUrl)
+                    .placeholder(R.drawable.ic_placeholder)
+                    .into(mBinding.preview);
+
+            mBinding.card.setOnClickListener(v -> listener.onCityClick(city));
+
+            mBinding.executePendingBindings();
         }
     }
 }
